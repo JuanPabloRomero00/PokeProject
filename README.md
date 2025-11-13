@@ -1,16 +1,81 @@
-# React + Vite
+# PokeProject
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+¡Bienvenido a **PokeProject**! Esta es una aplicación frontend desarrollada en React que consume la API de Pokémon para mostrar información detallada sobre tus Pokémon favoritos. Ideal para fans de Pokémon que quieran explorar datos de manera interactiva.
 
-Currently, two official plugins are available:
+## Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Exploración de Pokémon**: Lista y busca Pokémon por nombre o ID.
+- **Detalles Completos**: Información detallada incluyendo estadísticas, tipos, habilidades y evoluciones.
+- **Interfaz Amigable**: Diseño moderno y responsivo con React.
+- **Rápido y Ligero**: Construido con Vite para un desarrollo y build optimizados.
+- **API Integrada**: Consume datos en tiempo real de la [PokéAPI](https://pokeapi.co/).
 
-## React Compiler
+## Tecnologías Utilizadas
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React**: Biblioteca para construir interfaces de usuario.
+- **Vite**: Herramienta de build rápida para desarrollo moderno.
+- **JavaScript (ES6+)**: Lenguaje de programación principal.
+- **CSS**: Estilos personalizados para la UI.
+- **PokéAPI**: API externa para datos de Pokémon.
 
-## Expanding the ESLint configuration
+## Instalación
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Sigue estos pasos para configurar el proyecto en tu máquina local:
+
+1. **Clona el repositorio**:
+   ```bash
+   git clone https://github.com/JuanPabloRomero00/PokeProject.git
+   cd PokeProject
+   ```
+
+2. **Instala las dependencias**:
+   ```bash
+   npm install
+   ```
+
+3. **Ejecuta el servidor de desarrollo**:
+   ```bash
+   npm run dev
+   ```
+
+4. Abre tu navegador en `http://localhost:5173` para ver la aplicación.
+
+## Estructura del Proyecto
+
+```
+PokeProject/
+├── public/
+│   └── img/          # Imágenes estáticas
+├── src/
+│   ├── assets/       # Recursos adicionales
+│   ├── Components/   # Componentes reutilizables (ej. PokeTarjeta.jsx)
+│   ├── Views/        # Vistas principales (ej. Index.jsx, Detalle.jsx)
+│   ├── App.jsx       # Componente principal de la app
+│   ├── main.jsx      # Punto de entrada
+│   └── index.css     # Estilos globales
+├── package.json      # Dependencias y scripts
+├── vite.config.js    # Configuración de Vite
+└── README.md         # Este archivo
+```
+
+## Uso
+
+- Navega por la lista de Pokémon en la página principal.
+- Haz clic en un Pokémon para ver detalles completos.
+- Busca Pokémon específicos usando la barra de búsqueda (si implementada).
+
+## Contribución
+
+¡Las contribuciones son bienvenidas! Si quieres mejorar PokeProject:
+
+1. Haz un fork del proyecto.
+2. Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`).
+3. Commit tus cambios (`git commit -am 'Agrega nueva funcionalidad'`).
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`).
+5. Abre un Pull Request.
+
+Por favor, sigue las mejores prácticas de código limpio y agrega tests si es posible.
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
