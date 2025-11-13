@@ -1,0 +1,23 @@
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.1.0",
+    "animate.css": "^4.1.1",
+    "axios": "^1.13.2",
+    "bootstrap": "^5.3.8",
+    "fontawesome-free": "^1.0.4",
+    "react": "^18.3.1",
+    "react-bootstrap-pagination-control": "^1.0.5",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.9.5",
+    "reactstrap": "^9.2.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.1",
+    "vite": "^7.2.2"
+  }
+}
