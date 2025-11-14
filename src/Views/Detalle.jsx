@@ -5,7 +5,50 @@ import { Container, Row, Col, Card, CardBody, CardText, CardImg, Badge, Progress
 import axios from 'axios'
 import PokeTarjeta from '../Components/PokeTarjeta'
 
+const typeColorMap = {
+  fire: '#FF4500',
+  water: '#1E90FF',
+  grass: '#32CD32',
+  electric: '#FFD700',
+  ice: '#00CED1',
+  fighting: '#8B0000',
+  poison: '#9932CC',
+  ground: '#DEB887',
+  flying: '#87CEEB',
+  psychic: '#FF1493',
+  bug: '#9ACD32',
+  rock: '#A0522D',
+  ghost: '#4B0082',
+  dragon: '#0000FF',
+  dark: '#2F4F4F',
+  steel: '#C0C0C0',
+  fairy: '#FFB6C1',
+  normal: '#F5F5DC'
+};
+
+const typeTranslations = {
+  fire: 'fuego',
+  water: 'agua',
+  grass: 'planta',
+  electric: 'eléctrico',
+  ice: 'hielo',
+  fighting: 'lucha',
+  poison: 'veneno',
+  ground: 'tierra',
+  flying: 'volador',
+  psychic: 'psíquico',
+  bug: 'bicho',
+  rock: 'roca',
+  ghost: 'fantasma',
+  dragon: 'dragón',
+  dark: 'siniestro',
+  steel: 'acero',
+  fairy: 'hada',
+  normal: 'normal'
+};
+
 const Detalle = () => {
+
   const { id } = useParams();
   const [pokemon, setPokemon] = useState([]);
   const [especie, setEspecie] = useState([]);
@@ -17,12 +60,26 @@ const Detalle = () => {
   const [estadisticas, setEstadisticas] = useState([]);
   const [evoluciones, setEvoluciones] = useState([]);
   const [listaEvoluciones, setListaEvoluciones] = useState([]);
-  const [cardClass, setCardClass] = useState('d-none')
-  const [loadClass, setLoadClass] = useState('')
+  const [primaryColor, setPrimaryColor] = useState('#FF4500');
+  const [secondaryColor, setSecondaryColor] = useState('#1E90FF');
+  const [cardClass, setCardClass] = useState('d-none');
+  const [loadClass, setLoadClass] = useState('');
+  const [showVideo, setShowVideo] = useState(true);
 
   useEffect(() => {
     getPokemon();
   }, [id]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
+  useEffect(() => {
+    const name = tipos[0]?.type?.name;
+    const color = typeColorMap[name] || '#FF4500';
+    setPrimaryColor(color);
+    setSecondaryColor(color);
+  }, [tipos]);
 
   const getPokemon = async () => {
     try {
@@ -48,17 +105,7 @@ const Detalle = () => {
   }
 
   const getTipos = async (tip) => {
-    try {
-      let listaTipos = [];
-      tip.forEach( (t) => {
-        axios.get(t.type.url).then( async (response) => {
-          listaTipos.push(response.data.names[5].name);
-          setTipos(listaTipos);
-        });
-      });
-    } catch (error) {
-      console.error('Error al obtener tipos del pokemon:', error)
-    }
+    setTipos(tip);
   }
 
   const getHabilidades = async (hab) => {
@@ -173,6 +220,10 @@ const Detalle = () => {
   }
 
   return (
+    <div className={`background ${!showVideo ? 'animated-gradient' : ''}`} style={{'--color1': primaryColor, '--color2': secondaryColor, '--stat-color': primaryColor}}>
+      {showVideo && <video className="background-video" autoPlay muted loop onError={() => setShowVideo(false)}>
+        <source src="/img/pokeball-animation.mp4" type="video/mp4" />
+      </video>}
     <Container className="shadow">
       <Row>
         <Col>
@@ -180,7 +231,7 @@ const Detalle = () => {
             <CardBody className='mt-3'>
               <Row>
                 <Col className='text-end'>
-                  <Link to={'/'} className='btn btn-danger'>
+                  <Link to={'/'} className='btn btn-dark'>
                     <i className='fa-solid fa-home'></i>  Inicio
                   </Link>
                 </Col>
@@ -201,16 +252,17 @@ const Detalle = () => {
                     Peso: <b>{(pokemon.weight)/10}kg</b>  
                   </CardText>
                   <CardText className='fs-5'>
-                    Tipo(s): {tipos.map( (tipo, i) => (
-                      <Badge 
-                        key={i} 
-                        pill 
-                        color='danger' 
-                        className='me-2 text-capitalize'
-                      >
-                        {tipo}
-                      </Badge>
-                    ))}
+                    Tipo(s): {tipos.map( (tipo, i) => {
+                      return (
+                        <span 
+                          key={i} 
+                          className='badge badge-pill me-2 text-capitalize text-white type-badge'
+                          style={{'--type-color': typeColorMap[tipo.type.name] || '#FF4500'}}
+                        >
+                          {typeTranslations[tipo.type.name] || tipo.type.name}
+                        </span>
+                      );
+                    })}
                   </CardText>
                   <CardText className='fs-5'>
                     Habilidades: {habilidades.map( (hab, i) => (
@@ -239,7 +291,7 @@ const Detalle = () => {
                         ><b>{est.nombre}</b>
                       </Col>
                       <Col xs='6' md='9'>
-                        <Progress className='my-2' value={est.valor}>{est.valor}</Progress>
+                        <Progress className='my-2 stat-bar' value={est.valor}>{est.valor}</Progress>
                       </Col>
                     </Row>
                   ))}
@@ -256,6 +308,7 @@ const Detalle = () => {
         </Col>
       </Row>
     </Container>
+    </div>
   )
 }
 
