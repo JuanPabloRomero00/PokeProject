@@ -7,3 +7,11 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+
+.card-hover {
+    transition: all .25s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-8px) scale(1.01);
+}
