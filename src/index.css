@@ -18,12 +18,14 @@
 }
 
 .card-hover {
-    animation-delay: 1s;
+  position: relative;
+  transition: transform 0.45s ease-out, box-shadow 0.45s ease-out;
 }
 
 .card-hover:hover {
     transform: translateY(-8px) scale(1.05);
     box-shadow: 0 0 20px rgba(0, 123, 255, 0.7);
+    cursor: pointer;
 }
 
 .card-overlay {
@@ -44,24 +46,39 @@
     opacity: 0.3;
 }
 
-.card-hover:hover .card-body {
-    display: none;
+.card-hover .card-body,
+.card-hover img {
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
+.card-hover:hover .card-body,
 .card-hover:hover img {
-    opacity: 0;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
 }
 
 .hover-content {
-    display: none;
-    padding: 10px 16px 16px 16px;
-    text-align: center;
-    position: relative;
-    z-index: 20;
+  position: absolute;
+  inset: 0;
+  padding: 10px 16px 16px 16px;
+  text-align: center;
+  z-index: 20;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .card-hover:hover .hover-content {
-    display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 .description {
@@ -71,155 +88,11 @@
     justify-content: center;
     align-items: center;
     color: rgb(0, 0, 0);
-
+    text-align: center;
 }
 
 body {
   font-family: 'Roboto Slab', serif !important;
-}
-
-.card {
-    perspective: 1000px;
-}
-
-.card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-}
-
-.card.flipped .card-inner {
-    transform: rotateY(180deg);
-}
-
-.card-front, .card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-}
-
-.card-back {
-    transform: rotateY(180deg);
-}
-
-.card__like {
-    width: 18px;
-}
-
-.card__clock {
-    width: 15px;
-  vertical-align: middle;
-    fill: #AD7D52;
-}
-.card__time {
-    font-size: 12px;
-    color: #AD7D52;
-    vertical-align: middle;
-    margin-left: 5px;
-}
-
-.card__clock-info {
-    float: right;
-}
-
-.card__img {
-  visibility: hidden;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 190px;
-  border-top-left-radius: 12px;
-border-top-right-radius: 12px;
-  background-image: var(--bg-image);
-  
-}
-
-.card__info-hover {
-    position: absolute;
-    padding: 16px;
-    width: 100%;
-    opacity: 0;
-    top: 0;
-}
-
-.card__img--hover {
-    transition: 2s all ease-out;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    width: 100%;
-    position: absolute;
-    height: 190px;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    top: 0;
-    background-image: var(--bg-image);
-
-  
-}
-.card {
-  transition: all .4s cubic-bezier(0.175, 0.885, 0, 1);
-  background-color: #fff;
-  position: relative;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0px 13px 10px -7px rgba(0, 0, 0,0.1);
-}
-.card:hover {
-    box-shadow: 0px 30px 18px -8px rgba(0, 0, 0,0.1);
-    transform: scale(1.05, 1.05);
-}
-
-.card__info {
-  z-index: 2;
-  background-color: #fff;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-  padding: 16px 24px 24px 24px;
-}
-
-.card__category {
-    text-transform: uppercase;
-    font-size: 13px;
-    letter-spacing: 2px;
-    font-weight: 500;
-    color: #868686;
-}
-
-.card__title {
-    margin-top: 5px;
-    margin-bottom: 10px;
-}
-
-.card__by {
-    font-size: 12px;
-    font-weight: 500;
-}
-
-.card__author {
-    font-weight: 600;
-    text-decoration: none;
-    color: #AD7D52;
-}
-
-.card:hover .card__img--hover {
-    height: 100%;
-    opacity: 0.3;
-}
-
-.card:hover .card__info {
-    background-color: transparent;
-    position: relative;
-}
-
-.card:hover .card__info-hover {
-    opacity: 1;
 }
 
 .animated-gradient {
@@ -240,4 +113,19 @@ border-top-right-radius: 12px;
 
 .type-badge {
   background-color: var(--type-color) !important;
+}
+
+@media (max-width: 425px) {
+  .card-hover .hover-content {
+    display: none;
+  }
+
+  .card-hover:hover .card-body {
+    display: block;
+  }
+
+  .card-hover:hover {
+    transform: none;
+    box-shadow: 0 0 0 transparent;
+  }
 }
