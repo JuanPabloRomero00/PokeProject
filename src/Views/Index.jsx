@@ -23,9 +23,28 @@ const Index = () => {
     getAllPokemones();
   }, []);
 
+  const buscar = () => {
+    if (filtro.trim() !== '') {
+      if (selectedType === 'all') {
+        setListado(allPokemones.filter(pok => pok.name.toLowerCase().includes(filtro)));
+      } else {
+        setListado(typeList.filter(pok => pok.name.toLowerCase().includes(filtro)));
+      }
+    } else {
+      if (selectedType === 'all') {
+        setListado(pokemones);
+      } else {
+        setListado(typeList.slice(0, limit));
+      }
+    }
+  };
+
   useEffect(() => {
-    console.log('Pokemones actualizados:', pokemones);
-  }, [pokemones]);
+    const timeout = setTimeout(() => {
+      buscar();
+    }, 300);
+    return () => clearTimeout(timeout);
+  }, [filtro, selectedType, allPokemones, typeList, pokemones, limit]);
 
   const getPokemones = async (o) => {
     try {
@@ -58,29 +77,7 @@ const Index = () => {
     }
   };
 
-  const buscar = async (e) => { 
-    if (e.keyCode == 13) {
-      if (filtro.trim() != '') {
-        setListado([]);
-        setTimeout( () => {
-          if (selectedType === 'all') {
-            setListado(allPokemones.filter( pok => pok.name.includes(filtro) ));
-          } else {
-            setListado(typeList.filter( pok => pok.name.includes(filtro) ));
-          }
-        }, 100);
-      } 
-    } else if (filtro.trim() == '') {
-      setListado([]);
-      setTimeout( () => {
-        if (selectedType === 'all') {
-          setListado(pokemones);
-        } else {
-          setListado(typeList.slice(0, limit));
-        }
-      }, 100);
-    }
-  }
+
 
   const filterByType = async (type) => {
     setSelectedType(type);
@@ -136,7 +133,6 @@ const Index = () => {
                 <Input 
                   value={filtro} 
                   onChange={(e) => {setFiltro(e.target.value.toLowerCase())}} 
-                  onKeyUpCapture={buscar} 
                   placeholder="Buscar Pokemon"
                 />
             </InputGroup>        
